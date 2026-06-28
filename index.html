@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechZone – Tienda Electrónica</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- HEADER / NAV -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Tech<strong>Zone</strong></span>
+      </div>
+      <nav class="main-nav">
+        <a href="#productos" class="nav-link">Productos</a>
+        <a href="#ofertas"   class="nav-link">Ofertas</a>
+        <a href="#contacto"  class="nav-link">Contacto</a>
+      </nav>
+      <div class="header-actions">
+        <div class="search-wrapper">
+          <input type="text" id="search-input" placeholder="Buscar producto…" autocomplete="off" />
+          <span class="search-icon">🔍</span>
+        </div>
+        <button class="cart-btn" id="cart-toggle" aria-label="Abrir carrito">
+          🛒 <span class="cart-count" id="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Tecnología al alcance de tu mano</p>
+      <h1 class="hero-title">El futuro es<br /><span class="accent">hoy.</span></h1>
+      <p class="hero-sub">Encuentra los mejores componentes, laptops y gadgets con envío rápido a todo el Perú.</p>
+      <a href="#productos" class="btn-primary">Ver productos</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=700&h=560&fit=crop&auto=format"
+          alt="Setup gaming TechZone"
+          class="hero-img"
+          loading="eager"
+        />
+        <div class="hero-img-badge">
+          <span class="badge-dot"></span>
+          Envíos a todo el Perú
+        </div>
+        <div class="hero-img-card">
+          <span class="hcard-icon">⚡</span>
+          <div>
+            <p class="hcard-label">Oferta del día</p>
+            <p class="hcard-val">Hasta 40% OFF</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN OFERTA -->
+  <section class="countdown-bar" id="ofertas">
+    <p class="countdown-label">⚡ Oferta del día termina en:</p>
+    <div class="countdown-digits">
+      <span id="cd-h">00</span>h
+      <span id="cd-m">00</span>m
+      <span id="cd-s">00</span>s
+    </div>
+    <p class="countdown-desc">¡Hasta 40% de descuento en productos seleccionados!</p>
+  </section>
+
+  <!-- FILTROS -->
+  <section class="filter-section" id="productos">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-sub">Explora nuestra tienda y arma tu equipo perfecto.</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="todos">Todos</button>
+      <button class="filter-btn" data-filter="laptop">Laptops</button>
+      <button class="filter-btn" data-filter="componente">Componentes</button>
+      <button class="filter-btn" data-filter="periferico">Periféricos</button>
+      <button class="filter-btn" data-filter="gadget">Gadgets</button>
+    </div>
+  </section>
+
+  <!-- GRID DE PRODUCTOS -->
+  <main class="products-grid" id="products-grid"></main>
+
+  <!-- NOTIFICACIÓN TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- PANEL CARRITO (SIDEBAR) -->
+  <aside class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <h2>Tu carrito 🛒</h2>
+      <button class="close-cart" id="close-cart" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p class="cart-empty">Tu carrito está vacío.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">S/ 0.00</span>
+      </div>
+      <div class="cart-total-row">
+        <span>IGV (18%)</span>
+        <span id="cart-igv">S/ 0.00</span>
+      </div>
+      <div class="cart-total-row total">
+        <span>Total</span>
+        <span id="cart-total">S/ 0.00</span>
+      </div>
+      <button class="btn-checkout" id="btn-checkout">Finalizar compra</button>
+      <button class="btn-clear" id="btn-clear">Vaciar carrito</button>
+    </div>
+  </aside>
+  <div class="cart-overlay" id="cart-overlay"></div>
+
+  <!-- MODAL DE CHECKOUT -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="checkout-modal">
+      <button class="modal-close" id="modal-close">✕</button>
+      <h2 class="modal-title">Finalizar compra</h2>
+      <div class="modal-body">
+        <label>Nombre completo
+          <input type="text" id="f-name" placeholder="Juan Pérez" />
+          <span class="field-error" id="err-name"></span>
+        </label>
+        <label>Correo electrónico
+          <input type="email" id="f-email" placeholder="juan@email.com" />
+          <span class="field-error" id="err-email"></span>
+        </label>
+        <label>Teléfono
+          <input type="tel" id="f-phone" placeholder="9XXXXXXXX" maxlength="9" />
+          <span class="field-error" id="err-phone"></span>
+        </label>
+        <label>Dirección de envío
+          <input type="text" id="f-address" placeholder="Av. Principal 123, Arequipa" />
+          <span class="field-error" id="err-address"></span>
+        </label>
+        <label>Método de pago
+          <select id="f-payment">
+            <option value="">— Selecciona —</option>
+            <option value="yape">Yape / Plin</option>
+            <option value="tarjeta">Tarjeta crédito/débito</option>
+            <option value="efectivo">Pago contra entrega</option>
+          </select>
+          <span class="field-error" id="err-payment"></span>
+        </label>
+        <div class="modal-summary" id="modal-summary"></div>
+        <button class="btn-primary full" id="btn-confirm">Confirmar pedido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-box">
+      <div class="success-icon">✅</div>
+      <h2>¡Pedido confirmado!</h2>
+      <p id="success-msg"></p>
+      <button class="btn-primary" id="btn-success-close">Seguir comprando</button>
+    </div>
+  </div>
+
+  <!-- SECCIÓN CONTACTO -->
+  <section class="contact-section" id="contacto">
+    <div class="contact-inner">
+      <h2>¿Tienes dudas?</h2>
+      <p>Escríbenos y te respondemos en menos de 24 h.</p>
+      <div class="contact-form">
+        <input type="text"  id="c-name"    placeholder="Tu nombre"   />
+        <input type="email" id="c-email"   placeholder="Tu correo"   />
+        <textarea id="c-msg" placeholder="Tu mensaje…" rows="4"></textarea>
+        <button class="btn-primary" id="btn-contact">Enviar mensaje</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="logo-icon">⚡</span> Tech<strong>Zone</strong>
+        <p>Tu tienda de electrónica de confianza en Perú.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegación</h4>
+        <a href="#productos">Productos</a>
+        <a href="#ofertas">Ofertas</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-links">
+        <h4>Soporte</h4>
+        <a href="#">Garantías</a>
+        <a href="#">Devoluciones</a>
+        <a href="#">Seguimiento</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 TechZone. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- KEY SHORTCUT HINT -->
+  <div class="shortcut-hint" id="shortcut-hint">Presiona <kbd>C</kbd> para abrir el carrito</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
